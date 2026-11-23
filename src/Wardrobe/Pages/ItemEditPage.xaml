@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Wardrobe.Controls"
+             x:Class="Wardrobe.Pages.ItemEditPage"
+             SafeAreaEdges="Container">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <controls:PageHeader x:Name="Header"
+                             ShowBack="True"
+                             ActionIsDestructive="True"
+                             ActionTapped="OnDeleteClicked" />
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20,4,20,24" Spacing="16">
+
+                <!-- Photo -->
+                <Border Style="{StaticResource Card}" Padding="12">
+                    <VerticalStackLayout Spacing="12">
+                        <Border HeightRequest="260"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 14"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceVariantLight}, Dark={StaticResource SurfaceVariantDark}}">
+                            <Grid>
+                                <VerticalStackLayout x:Name="NoImage"
+                                                     Spacing="4"
+                                                     HorizontalOptions="Center"
+                                                     VerticalOptions="Center">
+                                    <Label Text="No photo yet"
+                                           FontFamily="OpenSansSemibold"
+                                           HorizontalOptions="Center" />
+                                    <Label Text="Images are resized to 512 × 512"
+                                           Style="{StaticResource SecondaryLabel}"
+                                           FontSize="13"
+                                           HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                                <Image x:Name="ItemImage" Aspect="AspectFit" />
+                            </Grid>
+                        </Border>
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <Button Text="Gallery"
+                                    Style="{StaticResource TonalButton}"
+                                    Clicked="OnPickPhotoClicked" />
+                            <Button Grid.Column="1"
+                                    Text="Camera"
+                                    Style="{StaticResource TonalButton}"
+                                    Clicked="OnTakePhotoClicked" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Details -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Details" Style="{StaticResource SectionLabel}" Margin="0,0,0,4" />
+
+                        <Label Text="Name" FontFamily="OpenSansSemibold" FontSize="14" />
+                        <Border Style="{StaticResource FieldBorder}">
+                            <Entry x:Name="NameEntry"
+                                   Placeholder="e.g. Blue oxford shirt"
+                                   VerticalOptions="Center" />
+                        </Border>
+
+                        <Label Text="Type" FontFamily="OpenSansSemibold" FontSize="14" Margin="0,8,0,0" />
+                        <controls:SelectField x:Name="TypeField"
+                                              Placeholder="Choose a type"
+                                              Tapped="OnTypeTapped" />
+
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,4">
+                            <Label Text="Color" FontFamily="OpenSansSemibold" FontSize="14" />
+                            <Label x:Name="ColorName"
+                                   Grid.Column="1"
+                                   Style="{StaticResource SecondaryLabel}" />
+                        </Grid>
+                        <controls:ColorSwatchPicker x:Name="ColorPicker"
+                                                    SelectionChanged="OnColorChanged" />
+
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" Margin="0,12,0,0">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnAtBottomRowTapped" />
+                            </Grid.GestureRecognizers>
+                            <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                                <Label Text="At the bottom" FontFamily="OpenSansSemibold" FontSize="14" />
+                                <Label Text="Buried somewhere at the bottom of the hanger"
+                                       Style="{StaticResource SecondaryLabel}"
+                                       FontSize="13" />
+                            </VerticalStackLayout>
+                            <!-- The whole row toggles; the switch itself ignores taps to avoid double toggling. -->
+                            <controls:ToggleSwitch x:Name="AtBottomSwitch"
+                                                   Grid.Column="1"
+                                                   InputTransparent="True" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Location -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Location" Style="{StaticResource SectionLabel}" />
+                        <controls:ChipGroup x:Name="WardrobeChips"
+                                            SelectionChanged="OnWardrobeChanged" />
+                        <Label x:Name="ShelfLabel" Style="{StaticResource SecondaryLabel}" />
+                        <controls:WardrobeLayoutView x:Name="LayoutView"
+                                                     ShelfTapped="OnShelfTapped" />
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Sticky save bar -->
+        <Border Grid.Row="2"
+                StrokeThickness="0"
+                Padding="20,12,20,16"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
+            <Button x:Name="SaveButton"
+                    Text="Save item"
+                    Clicked="OnSaveClicked" />
+        </Border>
+
+        <Grid x:Name="Busy"
+              Grid.RowSpan="3"
+              IsVisible="False"
+              BackgroundColor="{AppThemeBinding Light={StaticResource ScrimLight}, Dark={StaticResource ScrimDark}}">
+            <ActivityIndicator IsRunning="True"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+        </Grid>
+
+        <controls:BottomSheet x:Name="Sheet" Grid.RowSpan="3" />
+    </Grid>
+</ContentPage>

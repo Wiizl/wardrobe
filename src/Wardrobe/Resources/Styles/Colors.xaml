@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<!--
+    App palette. Every color has a Light and a Dark variant.
+    XAML uses {AppThemeBinding Light={StaticResource XLight}, Dark={StaticResource XDark}};
+    C# controls use Theme.SetColor(view, property, "X").
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Color x:Key="BackgroundLight">#F5F6FA</Color>
+    <Color x:Key="BackgroundDark">#0F1115</Color>
+
+    <Color x:Key="SurfaceLight">#FFFFFF</Color>
+    <Color x:Key="SurfaceDark">#1A1D24</Color>
+
+    <Color x:Key="SurfaceVariantLight">#EEF0F5</Color>
+    <Color x:Key="SurfaceVariantDark">#252933</Color>
+
+    <!-- Wardrobe drawing: frame behind the shelves, and the shelves themselves -->
+    <Color x:Key="ShelfFrameLight">#E6E8EF</Color>
+    <Color x:Key="ShelfFrameDark">#0F1115</Color>
+
+    <Color x:Key="ShelfLight">#FFFFFF</Color>
+    <Color x:Key="ShelfDark">#2B303B</Color>
+
+    <Color x:Key="OutlineLight">#E1E4EB</Color>
+    <Color x:Key="OutlineDark">#313643</Color>
+
+    <Color x:Key="TextPrimaryLight">#14161C</Color>
+    <Color x:Key="TextPrimaryDark">#F2F3F7</Color>
+
+    <Color x:Key="TextSecondaryLight">#6B7280</Color>
+    <Color x:Key="TextSecondaryDark">#9AA1AE</Color>
+
+    <Color x:Key="AccentLight">#5B5BD6</Color>
+    <Color x:Key="AccentDark">#8B8BF5</Color>
+
+    <Color x:Key="AccentSoftLight">#ECECFD</Color>
+    <Color x:Key="AccentSoftDark">#2B2B55</Color>
+
+    <Color x:Key="OnAccentLight">#FFFFFF</Color>
+    <Color x:Key="OnAccentDark">#0F1115</Color>
+
+    <Color x:Key="DangerLight">#E5484D</Color>
+    <Color x:Key="DangerDark">#FF6B6F</Color>
+
+    <Color x:Key="ScrimLight">#66000000</Color>
+    <Color x:Key="ScrimDark">#99000000</Color>
+
+</ResourceDictionary>

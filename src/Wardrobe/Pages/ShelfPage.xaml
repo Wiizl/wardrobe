@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Wardrobe.Controls"
+             xmlns:models="clr-namespace:Wardrobe.Models"
+             x:Class="Wardrobe.Pages.ShelfPage"
+             SafeAreaEdges="Container">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <controls:PageHeader x:Name="Header"
+                             ShowBack="True"
+                             ActionText="Add"
+                             ActionTapped="OnAddClicked" />
+
+        <CollectionView x:Name="ItemsView"
+                        Grid.Row="1"
+                        SelectionMode="None"
+                        Margin="20,0">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="12" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.Header>
+                <BoxView HeightRequest="4" Color="Transparent" />
+            </CollectionView.Header>
+            <CollectionView.Footer>
+                <BoxView HeightRequest="24" Color="Transparent" />
+            </CollectionView.Footer>
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="24,80" Spacing="8" HorizontalOptions="Center">
+                    <Label Text="This shelf is empty"
+                           FontFamily="OpenSansSemibold"
+                           FontSize="18"
+                           HorizontalOptions="Center" />
+                    <Label Text="Add the first item to keep track of it."
+                           Style="{StaticResource SecondaryLabel}"
+                           HorizontalOptions="Center" />
+                    <Button Text="Add item"
+                            Margin="0,16,0,0"
+                            HorizontalOptions="Center"
+                            Clicked="OnAddClicked" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:ClothingItem">
+                    <Border Style="{StaticResource Card}" Padding="10">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnItemTapped" />
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="76,*,Auto" ColumnSpacing="14">
+                            <Border WidthRequest="76"
+                                    HeightRequest="76"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 14"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceVariantLight}, Dark={StaticResource SurfaceVariantDark}}">
+                                <Image Source="{Binding ImagePath}" Aspect="AspectFill" />
+                            </Border>
+
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                                <Label Text="{Binding Name}"
+                                       FontFamily="OpenSansSemibold"
+                                       FontSize="16"
+                                       MaxLines="1"
+                                       LineBreakMode="TailTruncation" />
+                                <Label Text="{Binding Type}"
+                                       IsVisible="{Binding HasType}"
+                                       Style="{StaticResource SecondaryLabel}" />
+                                <HorizontalStackLayout Spacing="6" IsVisible="{Binding HasColor}">
+                                    <Ellipse WidthRequest="12"
+                                             HeightRequest="12"
+                                             VerticalOptions="Center"
+                                             Fill="{Binding ColorSwatch}"
+                                             Stroke="{AppThemeBinding Light={StaticResource OutlineLight}, Dark={StaticResource OutlineDark}}"
+                                             StrokeThickness="1" />
+                                    <Label Text="{Binding ColorName}"
+                                           Style="{StaticResource SecondaryLabel}"
+                                           FontSize="13" />
+                                </HorizontalStackLayout>
+                                <Border IsVisible="{Binding IsAtBottom}"
+                                        HorizontalOptions="Start"
+                                        Margin="0,2,0,0"
+                                        Padding="10,3"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 10"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource AccentSoftLight}, Dark={StaticResource AccentSoftDark}}">
+                                    <Label Text="At the bottom"
+                                           FontFamily="OpenSansSemibold"
+                                           FontSize="12"
+                                           TextColor="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <Path Grid.Column="2"
+                                  Data="M9,5 L16,12 L9,19"
+                                  WidthRequest="24"
+                                  HeightRequest="24"
+                                  VerticalOptions="Center"
+                                  StrokeThickness="2"
+                                  StrokeLineCap="Round"
+                                  StrokeLineJoin="Round"
+                                  Stroke="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
